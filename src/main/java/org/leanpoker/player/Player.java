@@ -53,8 +53,8 @@ public class Player {
                 return 0;
             }
         } else {
-            if (rank - playersActive >= 2) {
-                return call + (rank - 4) * minimumRaise;
+            if (rank - playersActive >= 3) {
+                return call + (rank - 3) * minimumRaise;
             } else if (rank - playersActive >= 0) {
                 return call;
             } else {
