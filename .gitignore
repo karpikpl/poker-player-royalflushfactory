@@ -7,5 +7,14 @@ build
 .gradle
 .idea
 poker-player-java.iml
+
 .idea
 *.iml
+
+/bin/
+
+
+# Eclipse/STS
+.classpath
+.project
+.settings/
