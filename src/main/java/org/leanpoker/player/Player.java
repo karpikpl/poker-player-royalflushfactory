@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 
 public class Player {
 
-    static final String VERSION = "Aggressive  Java folding player";
+    static final String VERSION = "Patient Java folding player";
 
     public static int betRequest(GameStateDto request) {
         final int currentBuyIn = getOrElse(request.getCurrentBuyIn(), 0);
@@ -41,15 +41,25 @@ public class Player {
         int bet = getOrElse(currentPlayer.getBet(), 0);
 
         int newBet = currentBuyIn - bet + minimumRaise;
-        if(rank > 0) {
-            return 1000;
-        }  else {
-            return newBet;
+        
+        if (getPlayersInGame(request) > 2) {
+        	return 0;
         }
+        return newBet;
 
     }
 
-    private static int getOrElse(JsonElement request, String property, int defaultValue) {
+    private static int getPlayersInGame(GameStateDto gameState) {
+    	int i=0;
+    	for (org.leanpoker.player.dto.PlayerDto player : gameState.getPlayers()) {
+            if((player.getStatus().equals("active"))) {
+				i++;
+            }
+        }
+    	return i;
+	}
+
+	private static int getOrElse(JsonElement request, String property, int defaultValue) {
         JsonElement element = request.getAsJsonObject().get(property);
         if(element == null) {
             return defaultValue;

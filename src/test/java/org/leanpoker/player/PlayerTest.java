@@ -48,6 +48,25 @@ public class PlayerTest {
 	}
 	
 	@Test
+	public void should_parse_gameStateShouldFold() throws IOException {
+
+		// Arrange
+		Player player = new Player();
+		JsonParser parser = new JsonParser();
+
+		URL resource = getClass().getResource("/gamestateShouldFold.json");
+		String jsonString = FileUtils.readFileToString(new File(resource.getFile()));
+
+		GameStateDto gameState = new Gson().fromJson(jsonString, GameStateDto.class);
+
+		// Act
+		int result = player.betRequest(gameState);
+
+		// Assert
+		assertEquals("Should fold", 0, result);
+	}
+	
+	@Test
 	public void should_parse_gameState2() throws IOException {
 
 		// Arrange
