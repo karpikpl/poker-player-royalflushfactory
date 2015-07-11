@@ -16,25 +16,31 @@ import com.google.gson.JsonParser;
 @WebServlet("/")
 public class PlayerServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("Java player is running");
-    }
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("action").equals("bet_request")) {
-            String gameState = req.getParameter("game_state");
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		resp.getWriter().print("Java player is running");
+	}
 
-            resp.getWriter().print(Player.betRequest(new Gson().fromJson(gameState, GameStateDto.class)));
-        }
-        if (req.getParameter("action").equals("showdown")) {
-            String gameState = req.getParameter("game_state");
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		if (req.getParameter("action").equals("bet_request")) {
+			String gameState = req.getParameter("game_state");
 
-            Player.showdown(new JsonParser().parse(gameState));
-        }
-        if (req.getParameter("action").equals("version")) {
-            resp.getWriter().print(Player.VERSION);
-        }
-    }
+			resp.getWriter().print(
+					Player.betRequest(new Gson().fromJson(gameState,
+							GameStateDto.class)));
+		}
+		if (req.getParameter("action").equals("showdown")) {
+			String gameState = req.getParameter("game_state");
+
+			Player.showdown(new JsonParser().parse(gameState));
+		}
+		if (req.getParameter("action").equals("version")) {
+			resp.getWriter().print(Player.VERSION);
+		}
+	}
 }

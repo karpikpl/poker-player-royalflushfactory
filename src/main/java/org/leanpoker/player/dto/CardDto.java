@@ -1,15 +1,26 @@
 package org.leanpoker.player.dto;
 
 import javax.annotation.Generated;
+
 import com.google.gson.annotations.Expose;
 
 @Generated("org.jsonschema2pojo")
-public class HoleCardDto {
+public class CardDto {
 
 	@Expose
 	private String rank;
 	@Expose
 	private String suit;
+
+	public CardDto() {
+
+	}
+
+	public CardDto(String rank, String suit) {
+		super();
+		this.rank = rank;
+		this.suit = suit;
+	}
 
 	/**
 	 *

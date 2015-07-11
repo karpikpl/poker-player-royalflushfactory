@@ -1,16 +1,16 @@
 package org.leanpoker.util;
 
-import org.leanpoker.rank.Card;
+import org.leanpoker.player.dto.CardDto;
 
 public class CardUtils {
-	public static char convertCardrankToChar(final Card card) {
-		if (card.getCardRank().equals("10")) {
+	public static char convertCardrankToChar(final CardDto card) {
+		if (card.getRank().equals("10")) {
 			return 'T';
 		}
-		return card.getCardRank().charAt(0);
+		return card.getRank().charAt(0);
 	}
 
-	public static boolean areTheSameColors(final Card card1, final Card card2) {
-		return card1.getCardSuit().equals(card2.getCardSuit());
+	public static boolean areTheSameColors(final CardDto card1, final CardDto card2) {
+		return card1.getSuit().equals(card2.getSuit());
 	}
 }

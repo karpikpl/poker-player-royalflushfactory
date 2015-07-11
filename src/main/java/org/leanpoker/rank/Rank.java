@@ -3,13 +3,15 @@ package org.leanpoker.rank;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.leanpoker.player.dto.CardDto;
+
 public class Rank {
 	private int rank;
 	private int value;
 	private int secondValue;
 	private List<Integer> kickers = new ArrayList<Integer>();
-	private List<Card> cardsUsed = new ArrayList<Card>();
-	private List<Card> cards = new ArrayList<Card>();
+	private List<CardDto> cardsUsed = new ArrayList<CardDto>();
+	private List<CardDto> cards = new ArrayList<CardDto>();
 
 	public int getRank() {
 		return this.rank;
@@ -43,19 +45,19 @@ public class Rank {
 		this.kickers = kickers;
 	}
 
-	public List<Card> getCardsUsed() {
+	public List<CardDto> getCardsUsed() {
 		return this.cardsUsed;
 	}
 
-	public void setCardsUsed(final List<Card> cardsUsed) {
+	public void setCardsUsed(final List<CardDto> cardsUsed) {
 		this.cardsUsed = cardsUsed;
 	}
 
-	public List<Card> getCards() {
+	public List<CardDto> getCards() {
 		return this.cards;
 	}
 
-	public void setCards(final List<Card> cards) {
+	public void setCards(final List<CardDto> cards) {
 		this.cards = cards;
 	}
 

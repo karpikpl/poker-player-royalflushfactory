@@ -41,7 +41,7 @@ public class PlayerTest {
 		GameStateDto gameState = new Gson().fromJson(jsonString, GameStateDto.class);
 
 		// Act
-		int result = player.betRequest(gameState);
+		int result = Player.betRequest(gameState);
 
 		// Assert
 		assertTrue("Bet cannot be negative", result >= 0);
@@ -60,7 +60,7 @@ public class PlayerTest {
 		GameStateDto gameState = new Gson().fromJson(jsonString, GameStateDto.class);
 
 		// Act
-		int result = player.betRequest(gameState);
+		int result = Player.betRequest(gameState);
 
 		// Assert
 		assertTrue("Bet cannot be negative", result >= 0);

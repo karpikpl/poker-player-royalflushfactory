@@ -23,7 +23,7 @@ public class PlayerDto {
 	private Integer bet;
 	@SerializedName("hole_cards")
 	@Expose
-	private List<HoleCardDto> holeCards = new ArrayList<HoleCardDto>();
+	private List<CardDto> holeCards = new ArrayList<CardDto>();
 
 	/**
 	 *
@@ -131,7 +131,7 @@ public class PlayerDto {
 	 *
 	 * @return The holeCards
 	 */
-	public List<HoleCardDto> getHoleCards() {
+	public List<CardDto> getHoleCards() {
 		return holeCards;
 	}
 
@@ -140,7 +140,7 @@ public class PlayerDto {
 	 * @param holeCards
 	 *            The hole_cards
 	 */
-	public void setHoleCards(List<HoleCardDto> holeCards) {
+	public void setHoleCards(List<CardDto> holeCards) {
 		this.holeCards = holeCards;
 	}
 

@@ -44,7 +44,7 @@ public class GameStateDto {
 	private List<PlayerDto> players = new ArrayList<PlayerDto>();
 	@SerializedName("community_cards")
 	@Expose
-	private List<CommunityCardDto> communityCards = new ArrayList<CommunityCardDto>();
+	private List<CardDto> communityCards = new ArrayList<CardDto>();
 
 	/**
 	 *
@@ -254,7 +254,7 @@ public class GameStateDto {
 	 *
 	 * @return The communityCards
 	 */
-	public List<CommunityCardDto> getCommunityCards() {
+	public List<CardDto> getCommunityCards() {
 		return communityCards;
 	}
 
@@ -263,7 +263,7 @@ public class GameStateDto {
 	 * @param communityCards
 	 *            The community_cards
 	 */
-	public void setCommunityCards(List<CommunityCardDto> communityCards) {
+	public void setCommunityCards(List<CardDto> communityCards) {
 		this.communityCards = communityCards;
 	}
 
