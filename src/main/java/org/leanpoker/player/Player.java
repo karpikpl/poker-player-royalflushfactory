@@ -2,6 +2,7 @@ package org.leanpoker.player;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.leanpoker.rank.RankService;
 
 import java.util.Map;
 
@@ -19,9 +20,13 @@ public class Player {
         final JsonObject currentPlayer = findCurrentPlayer(request, inAction);
         int stack = getOrElse(currentPlayer, "stack", 0);
 
+        currentPlayer.getAsJsonArray("");
+
+//        RankService.checkRank()
+
         int bet = getOrElse(currentPlayer, "bet", 0);
 
-        if(round < 10) {
+        if(round < 10 && bet > 0.5 * stack) {
             return 0;
         } else {
             return currentBuyIn - bet + minimumRaise;
