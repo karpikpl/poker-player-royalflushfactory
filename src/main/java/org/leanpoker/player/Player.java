@@ -21,7 +21,7 @@ public class Player {
 
         int bet = getOrElse(currentPlayer, "bet", 0);
 
-        if(round > 10) {
+        if(round < 10) {
             return 0;
         } else {
             return currentBuyIn - bet + minimumRaise;
