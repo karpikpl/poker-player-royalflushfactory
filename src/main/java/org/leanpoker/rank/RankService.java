@@ -5,8 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -22,7 +21,39 @@ import com.google.gson.JsonParser;
 
 public class RankService {
 
+
 	public static Rank checkRank(final List<Card> cards) {
+        if(cards.size() == 2) {
+            final Card card1 = cards.get(0);
+            final Card card2 = cards.get(1);
+            List<String> top = Arrays.asList("A", "K");
+            List<String> strong = Arrays.asList("A", "K", "Q", "J");
+            List<String> lessStrong = Arrays.asList("A", "K", "Q", "J", "10");
+            List<String> weak = Arrays.asList("9", "8", "7");
+            boolean isPair = card1.getCardRank().equals( card2.getCardRank());
+           /* if(isPair && strong.contains(card1.getCardRank()) ){
+                Rank rank = new Rank();
+                rank.setRank(8);
+                return rank;
+            } else if(top.contains(card1.getCardRank()) && top.contains(card2.getCardRank()) && card1.getCardSuit().equals(card2.getCardSuit()) ) {
+                Rank rank = new Rank();
+                rank.setRank(7);
+                return rank;
+            } else if (isPair && card1.getCardRank().equals("10")) {
+                Rank rank = new Rank();
+                rank.setRank(6);
+                return rank;
+            }  else if (isPair && weak.contains(card1.getCardRank())) {
+                Rank rank = new Rank();
+                rank.setRank(3);
+                return rank;
+            } else*/ if(isPair) {
+                Rank rank = new Rank();
+                rank.setRank(8);
+                return rank;
+            }
+
+        }
 		try {
 			final JsonArray jsonCards = createJsonCards(cards);
 			final HttpResponse response = sendRequest(jsonCards);
@@ -55,7 +86,7 @@ public class RankService {
 		final List<Card> cardsUsed = new ArrayList<Card>();
 		final JsonArray jsonCardsUsed = jsonObject.get("cards_used").getAsJsonArray();
 		for (int i = 0; i < jsonCardsUsed.size(); i++) {
-			final char cardRank = jsonCardsUsed.get(i).getAsJsonObject().get("rank").getAsCharacter();
+			final String cardRank = jsonCardsUsed.get(i).getAsJsonObject().get("rank").getAsString();
 			final String cardSuit = jsonCardsUsed.get(i).getAsJsonObject().get("suit").getAsString();
 			final Card card = new Card(cardRank, cardSuit);
 			cardsUsed.add(card);
@@ -65,7 +96,7 @@ public class RankService {
 		final List<Card> allCards = new ArrayList<Card>();
 		final JsonArray jsonAllCards = jsonObject.get("cards").getAsJsonArray();
 		for (int i = 0; i < jsonAllCards.size(); i++) {
-			final char cardRank = jsonAllCards.get(i).getAsJsonObject().get("rank").getAsCharacter();
+			final String cardRank = jsonAllCards.get(i).getAsJsonObject().get("rank").getAsString();
 			final String cardSuit = jsonAllCards.get(i).getAsJsonObject().get("suit").getAsString();
 			final Card card = new Card(cardRank, cardSuit);
 			allCards.add(card);

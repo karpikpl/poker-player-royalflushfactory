@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 
 public class Player {
 
-	static final String VERSION = "Aggressive  Java folding player";
+    	static final String VERSION = "Aggressive  Java folding player";
 
 	public static int betRequest(GameStateDto request) {
 		final int currentBuyIn = getOrElse(request.getCurrentBuyIn(), 0);
@@ -27,13 +27,14 @@ public class Player {
 		final PlayerDto currentPlayer = findCurrentPlayer(request, inAction);
 		int stack = getOrElse(currentPlayer.getStack(), 0);
 
-		List<HoleCardDto> hole_cards = currentPlayer.getHoleCards();
-		List<Card> cards = new ArrayList<Card>();
-		for (HoleCardDto card : hole_cards) {
-			char rank = card.getRank().charAt(0);
-			String suit = card.getSuit();
-			cards.add(new Card(rank, suit));
-		}
+        
+        List<HoleCardDto> hole_cards = currentPlayer.getHoleCards();
+        List<Card> cards = new ArrayList<Card>();
+        for(HoleCardDto card: hole_cards) {
+            String rank = card.getRank();
+            String suit = card.getSuit();
+            cards.add(new Card(rank, suit));
+        }
 
 		int rank = RankService.checkRank(cards).getRank();
 
@@ -42,7 +43,11 @@ public class Player {
 		int newBet = currentBuyIn - bet + minimumRaise;
 
 		if (getPlayersInGame(request) > 2) {
-			return 0;
+            if(rank > 6) {
+                return newBet;
+            } else {
+                return 0;
+            }
 		}
 		return newBet;
 	}
