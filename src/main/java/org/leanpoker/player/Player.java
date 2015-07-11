@@ -19,7 +19,7 @@ public class Player {
         final int minimumRaise = getOrElse(gameState.getMinimumRaise(), 1);
         final int round = getOrElse(gameState.getRound(), 0);
 
-        final int inAction = gameState.getInAction();
+        final Integer inAction = gameState.getInAction();
 
         final PlayerDto currentPlayer = findCurrentPlayer(gameState, inAction);
         int stack = getOrElse(currentPlayer.getStack(), 0);
@@ -45,7 +45,7 @@ public class Player {
 
 
         if (rank - playersActive >= 2) {
-            return newBet + (rank / 2 * minimumRaise);
+            return newBet + (rank - 6) * minimumRaise;
         } else if (playersInGame == 2) {
             return currentBuyIn - bet;
         } else{
