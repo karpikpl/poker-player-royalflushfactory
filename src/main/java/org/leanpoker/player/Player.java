@@ -15,40 +15,43 @@ public class Player {
     static final String VERSION = "Aggressive  Java folding player";
 
 	public static int betRequest(GameStateDto gameState) {
-		final int currentBuyIn = getOrElse(gameState.getCurrentBuyIn(), 0);
-		final int minimumRaise = getOrElse(gameState.getMinimumRaise(), 1);
-		final int round = getOrElse(gameState.getRound(), 0);
+        final int currentBuyIn = getOrElse(gameState.getCurrentBuyIn(), 0);
+        final int minimumRaise = getOrElse(gameState.getMinimumRaise(), 1);
+        final int round = getOrElse(gameState.getRound(), 0);
 
-		final int inAction = gameState.getInAction();
+        final int inAction = gameState.getInAction();
 
-		final PlayerDto currentPlayer = findCurrentPlayer(gameState, inAction);
-		int stack = getOrElse(currentPlayer.getStack(), 0);
+        final PlayerDto currentPlayer = findCurrentPlayer(gameState, inAction);
+        int stack = getOrElse(currentPlayer.getStack(), 0);
 
         List<CardDto> communityCards = gameState.getCommunityCards();
 
         List<CardDto> hole_cards = currentPlayer.getHoleCards();
-        List<CardDto> cards = new ArrayList<CardDto>() ;
+        List<CardDto> cards = new ArrayList<CardDto>();
         cards.addAll(hole_cards);
 
-        if(communityCards.size() >= 3) {
+        if (communityCards.size() >= 3) {
             cards.addAll(communityCards);
         }
 
-		int rank = RankService.checkRank(cards).getRank();
+        int rank = RankService.checkRank(cards).getRank();
 
-		int bet = getOrElse(currentPlayer.getBet(), 0);
+        int bet = getOrElse(currentPlayer.getBet(), 0);
 
-		int newBet = currentBuyIn - bet + minimumRaise;
+        int newBet = currentBuyIn - bet + minimumRaise;
 
-		if (getPlayersInGame(gameState) > 2) {
-            if(rank > 5) {
-                return newBet;
-            } else {
-                return 0;
-            }
-		}
+        int playersActive = getPlayersActive(gameState);
+        int playersInGame = getPlayersInGame(gameState);
 
-		return newBet;
+
+        if (rank - playersActive >= 2) {
+            return newBet + (rank / 2 * minimumRaise);
+        } else if (playersInGame == 2) {
+            return currentBuyIn - bet;
+        } else{
+            return 0;
+        }
+
 	}
 
     private static int getPlayersInGame(GameStateDto gameState) {
