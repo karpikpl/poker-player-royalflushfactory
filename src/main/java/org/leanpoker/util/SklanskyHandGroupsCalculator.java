@@ -15,7 +15,7 @@ public class SklanskyHandGroupsCalculator {
 		return 0;
 	}
 
-	private final static Map<String, Integer> initData = new HashMap<>();
+	private final static Map<String, Integer> initData = new HashMap<String, Integer>();
 
 	private static void initRow(Integer rank, String... pairs) {
 		for (String pair : pairs) {

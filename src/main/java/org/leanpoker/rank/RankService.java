@@ -21,6 +21,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.leanpoker.util.CardUtils;
+import org.leanpoker.util.SklanskyHandGroupsCalculator;
 
 public class RankService {
 
@@ -28,33 +30,17 @@ public class RankService {
 		if (cards.size() == 2) {
 			final CardDto card1 = cards.get(0);
 			final CardDto card2 = cards.get(1);
-			List<String> top = Arrays.asList("A", "K");
-			List<String> strong = Arrays.asList("A", "K", "Q", "J");
-			List<String> lessStrong = Arrays.asList("A", "K", "Q", "J", "10");
-			List<String> weak = Arrays.asList("9", "8", "7");
-			boolean isPair = card1.getRank().equals(card2.getRank());
-			/*
-			 * if(isPair && strong.contains(card1.getCardRank()) ){ Rank rank =
-			 * new Rank(); rank.setRank(8); return rank; } else
-			 * if(top.contains(card1.getCardRank()) &&
-			 * top.contains(card2.getCardRank()) &&
-			 * card1.getCardSuit().equals(card2.getCardSuit()) ) { Rank rank =
-			 * new Rank(); rank.setRank(7); return rank; } else if (isPair &&
-			 * card1.getCardRank().equals("10")) { Rank rank = new Rank();
-			 * rank.setRank(6); return rank; } else if (isPair &&
-			 * weak.contains(card1.getCardRank())) { Rank rank = new Rank();
-			 * rank.setRank(3); return rank; } else
-			 */if (isPair) {
-				Rank rank = new Rank();
-				rank.setRank(8);
-				return rank;
-			} else {
-				Rank rank = new Rank();
-				rank.setRank(0);
-				return rank;
-			}
+            char c1 = CardUtils.convertCardrankToChar(card1);
+            char c2 = CardUtils.convertCardrankToChar(card2);
+            boolean same = CardUtils.areTheSameColors(card1, card2);
 
-		}
+            Integer rank = new SklanskyHandGroupsCalculator().getRank(c1, c2, same);
+            Rank rank1 = new Rank();
+            rank1.setRank(rank);
+            return rank1;
+
+
+        }
 		try {
 			final JsonArray jsonCards = createJsonCards(cards);
 			final HttpResponse response = sendRequest(jsonCards);
