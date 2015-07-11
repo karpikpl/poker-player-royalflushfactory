@@ -51,6 +51,10 @@ public class RankService {
                 Rank rank = new Rank();
                 rank.setRank(8);
                 return rank;
+            } else {
+                Rank rank = new Rank();
+                rank.setRank(0);
+                return rank;
             }
 
         }
