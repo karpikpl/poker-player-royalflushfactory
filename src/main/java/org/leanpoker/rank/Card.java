@@ -2,28 +2,20 @@ package org.leanpoker.rank;
 
 public class Card {
 
-	private final CardRank cardRank;
+	private final char cardRank;
 
-	private final CardSuit cardSuit;
+	private final String cardSuit;
 
-	public Card(final CardRank cardRank, final CardSuit cardSuit) {
+	public Card(final char cardRank, final String cardSuit) {
 		this.cardRank = cardRank;
 		this.cardSuit = cardSuit;
 	}
 
-	public CardRank getCardRank() {
+	public char getCardRank() {
 		return this.cardRank;
 	}
 
-	public CardSuit getCardSuit() {
+	public String getCardSuit() {
 		return this.cardSuit;
-	}
-
-	public static enum CardRank {
-		_2, _3, _4, _5, _6, _7, _8, _9, _10, J, Q, D, A;
-	}
-
-	public static enum CardSuit {
-		spade, heart, diamond, club;
 	}
 }
