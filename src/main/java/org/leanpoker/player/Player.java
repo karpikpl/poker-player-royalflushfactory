@@ -82,7 +82,7 @@ public class Player {
     private static int getPlayersInGame(GameStateDto gameState) {
     	int i=0;
     	for (org.leanpoker.player.dto.PlayerDto player : gameState.getPlayers()) {
-            if((player.getStatus().equals("active"))) {
+            if(!player.getStatus().equals("out")) {
 				i++;
             }
         }
