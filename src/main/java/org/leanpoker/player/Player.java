@@ -12,14 +12,21 @@ public class Player {
     public static int betRequest(final JsonElement request) {
         final int currentBuyIn = getOrElse(request, "current_buy_in", 0);
         final int minimumRaise = getOrElse(request, "minimum_raise", 1);
+        final int round = getOrElse(request, "round", 0);
 
         final int inAction = request.getAsJsonObject().get("in_action").getAsInt();
 
         final JsonObject currentPlayer = findCurrentPlayer(request, inAction);
+        int stack = getOrElse(currentPlayer, "stack", 0);
 
         int bet = getOrElse(currentPlayer, "bet", 0);
 
-        return currentBuyIn - bet + minimumRaise;
+        if(round > 10) {
+            return 0;
+        } else {
+            return currentBuyIn - bet + minimumRaise;
+        }
+
     }
 
     private static int getOrElse(JsonElement request, String property, int defaultValue) {
