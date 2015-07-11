@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.leanpoker.rank.Card;
+import org.leanpoker.rank.Rank;
 import org.leanpoker.rank.RankService;
 
 import java.util.ArrayList;
@@ -32,14 +33,14 @@ public class Player {
             cards.add(new Card(rank, suit));
         }
 
-        RankService.checkRank(cards);
+        int rank = RankService.checkRank(cards).getRank();
 
         int bet = getOrElse(currentPlayer, "bet", 0);
 
         int newBet = currentBuyIn - bet + minimumRaise;
-        if(newBet > stack / 2 ) {
-            return 0;
-        } else {
+        if(rank > 0) {
+            return 1000;
+        }  else {
             return newBet;
         }
 
