@@ -1,9 +1,13 @@
 package org.leanpoker.player;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.leanpoker.rank.Card;
 import org.leanpoker.rank.RankService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Player {
@@ -20,16 +24,23 @@ public class Player {
         final JsonObject currentPlayer = findCurrentPlayer(request, inAction);
         int stack = getOrElse(currentPlayer, "stack", 0);
 
-        currentPlayer.getAsJsonArray("");
+        JsonArray hole_cards = currentPlayer.getAsJsonArray("hole_cards");
+        List<Card> cards = new ArrayList<Card>();
+        for(JsonElement card: hole_cards) {
+            char rank = card.getAsJsonObject().get("rank").getAsCharacter();
+            String suit = card.getAsJsonObject().get("suit").getAsString();
+            cards.add(new Card(rank, suit));
+        }
 
-//        RankService.checkRank()
+        RankService.checkRank(cards);
 
         int bet = getOrElse(currentPlayer, "bet", 0);
 
-        if(round < 10 && bet > 0.5 * stack) {
+        int newBet = currentBuyIn - bet + minimumRaise;
+        if(newBet > stack / 2 ) {
             return 0;
         } else {
-            return currentBuyIn - bet + minimumRaise;
+            return newBet;
         }
 
     }
