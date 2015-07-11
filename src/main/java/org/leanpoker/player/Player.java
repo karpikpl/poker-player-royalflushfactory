@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class Player {
 
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "Aggressive  Java folding player";
 
-    public static int betRequest(JsonElement request) {
+    public static int betRequest(final JsonElement request) {
         final int currentBuyIn = getOrElse(request, "current_buy_in", 0);
         final int minimumRaise = getOrElse(request, "minimum_raise", 1);
 
@@ -18,7 +18,7 @@ public class Player {
         final JsonObject currentPlayer = findCurrentPlayer(request, inAction);
 
         int bet = getOrElse(currentPlayer, "bet", 0);
-        
+
         return currentBuyIn - bet + minimumRaise;
     }
 
