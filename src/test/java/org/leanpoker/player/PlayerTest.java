@@ -10,8 +10,9 @@ import java.net.URL;
 import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.leanpoker.player.dto.GameStateDto;
 
-import com.google.gson.JsonElement;
+import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
 public class PlayerTest {
@@ -20,10 +21,10 @@ public class PlayerTest {
 	@Ignore
 	public void testBetRequest() throws Exception {
 
-		JsonElement jsonElement = new JsonParser()
-				.parse("{\"key1\": \"value1\", \"key2\": \"value2\"}");
+		GameStateDto gameState = new Gson().fromJson(
+				"{\"key1\": \"value1\", \"key2\": \"value2\"}", GameStateDto.class);
 
-		assertEquals(0, Player.betRequest(jsonElement));
+		assertEquals(0, Player.betRequest(gameState));
 
 	}
 
@@ -37,7 +38,7 @@ public class PlayerTest {
 		URL resource = getClass().getResource("/gamestate.json");
 		String jsonString = FileUtils.readFileToString(new File(resource.getFile()));
 
-		JsonElement gameState = parser.parse(jsonString);
+		GameStateDto gameState = new Gson().fromJson(jsonString, GameStateDto.class);
 
 		// Act
 		int result = player.betRequest(gameState);
@@ -56,7 +57,7 @@ public class PlayerTest {
 		URL resource = getClass().getResource("/gamestate2.json");
 		String jsonString = FileUtils.readFileToString(new File(resource.getFile()));
 
-		JsonElement gameState = parser.parse(jsonString);
+		GameStateDto gameState = new Gson().fromJson(jsonString, GameStateDto.class);
 
 		// Act
 		int result = player.betRequest(gameState);

@@ -1,41 +1,44 @@
 package org.leanpoker.player;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.leanpoker.player.dto.GameStateDto;
+import org.leanpoker.player.dto.HoleCardDto;
+import org.leanpoker.player.dto.PlayerDto;
 import org.leanpoker.rank.Card;
 import org.leanpoker.rank.Rank;
 import org.leanpoker.rank.RankService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 public class Player {
 
     static final String VERSION = "Aggressive  Java folding player";
 
-    public static int betRequest(final JsonElement request) {
-        final int currentBuyIn = getOrElse(request, "current_buy_in", 0);
-        final int minimumRaise = getOrElse(request, "minimum_raise", 1);
-        final int round = getOrElse(request, "round", 0);
+    public static int betRequest(GameStateDto request) {
+        final int currentBuyIn = getOrElse(request.getCurrentBuyIn(), 0);
+        final int minimumRaise = getOrElse(request.getMinimumRaise(), 1);
+        final int round = getOrElse(request.getRound(), 0);
 
-        final int inAction = request.getAsJsonObject().get("in_action").getAsInt();
+        final int inAction = request.getInAction();
 
-        final JsonObject currentPlayer = findCurrentPlayer(request, inAction);
-        int stack = getOrElse(currentPlayer, "stack", 0);
+        final PlayerDto currentPlayer = findCurrentPlayer(request, inAction);
+        int stack = getOrElse(currentPlayer.getStack(), 0);
 
-        JsonArray hole_cards = currentPlayer.getAsJsonArray("hole_cards");
+        
+        List<HoleCardDto> hole_cards = currentPlayer.getHoleCards();
         List<Card> cards = new ArrayList<Card>();
-        for(JsonElement card: hole_cards) {
-            char rank = card.getAsJsonObject().get("rank").getAsCharacter();
-            String suit = card.getAsJsonObject().get("suit").getAsString();
+        for(HoleCardDto card: hole_cards) {
+            char rank = card.getRank().charAt(0);
+            String suit = card.getSuit();
             cards.add(new Card(rank, suit));
         }
 
         int rank = RankService.checkRank(cards).getRank();
 
-        int bet = getOrElse(currentPlayer, "bet", 0);
+        int bet = getOrElse(currentPlayer.getBet(), 0);
 
         int newBet = currentBuyIn - bet + minimumRaise;
         if(rank > 0) {
@@ -55,11 +58,16 @@ public class Player {
         }
     }
 
-    private static JsonObject findCurrentPlayer(JsonElement request, int inAction) {
-        for(JsonElement element : request.getAsJsonObject().get("players").getAsJsonArray()){
-            JsonObject player = element.getAsJsonObject();
-            int playerId = player.get("id").getAsInt();
-            if(playerId == inAction) {
+    private static int getOrElse(Object element, int defaultValue) {
+        if(element == null) {
+            return defaultValue;
+        } else {
+            return (Integer)element;
+        }
+    }
+    private static org.leanpoker.player.dto.PlayerDto findCurrentPlayer(GameStateDto gameState, int inAction) {
+    	for (org.leanpoker.player.dto.PlayerDto player : gameState.getPlayers()) {
+            if((player.getId()!=null)&&(player.getId() == inAction)) {
                 return player;
             }
         }
