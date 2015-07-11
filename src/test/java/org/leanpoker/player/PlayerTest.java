@@ -43,6 +43,25 @@ public class PlayerTest {
 		int result = player.betRequest(gameState);
 
 		// Assert
-		assertTrue("Bet cannot be negative", result > 0);
+		assertTrue("Bet cannot be negative", result >= 0);
+	}
+	
+	@Test
+	public void should_parse_gameState2() throws IOException {
+
+		// Arrange
+		Player player = new Player();
+		JsonParser parser = new JsonParser();
+
+		URL resource = getClass().getResource("/gamestate2.json");
+		String jsonString = FileUtils.readFileToString(new File(resource.getFile()));
+
+		JsonElement gameState = parser.parse(jsonString);
+
+		// Act
+		int result = player.betRequest(gameState);
+
+		// Assert
+		assertTrue("Bet cannot be negative", result >= 0);
 	}
 }
