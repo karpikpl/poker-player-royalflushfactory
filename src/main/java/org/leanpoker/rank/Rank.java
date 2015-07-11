@@ -1,14 +1,15 @@
 package org.leanpoker.rank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rank {
 	private int rank;
 	private int value;
 	private int secondValue;
-	private List<Integer> kickers;
-	private List<Card> cardsUsed;
-	private List<Card> cards;
+	private List<Integer> kickers = new ArrayList<Integer>();
+	private List<Card> cardsUsed = new ArrayList<Card>();
+	private List<Card> cards = new ArrayList<Card>();
 
 	public int getRank() {
 		return this.rank;
@@ -58,4 +59,9 @@ public class Rank {
 		this.cards = cards;
 	}
 
+	@Override
+	public String toString() {
+		return "Rank[rank=" + this.rank + ",value=" + this.value + ",secondValue=" + this.secondValue + ",kickers="
+				+ this.kickers + ",cardsUsed=" + this.cardsUsed + ",cards=" + this.cards + "]";
+	}
 }

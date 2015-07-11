@@ -18,4 +18,9 @@ public class Card {
 	public String getCardSuit() {
 		return this.cardSuit;
 	}
+
+	@Override
+	public String toString() {
+		return "Card[cardRank=" + this.cardRank + ",cardSuit=" + this.cardSuit + "]";
+	}
 }
