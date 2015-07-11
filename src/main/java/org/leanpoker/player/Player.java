@@ -1,16 +1,16 @@
 package org.leanpoker.player;
 
-import com.google.gson.JsonElement;
-
-import java.util.Map;
 import java.util.Random;
+
+import com.google.gson.JsonElement;
 
 public class Player {
 
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "Mad player";
 
     public static int betRequest(JsonElement request) {
-        return new Random().nextInt(100);
+        Random random = new Random();
+		return random.nextInt(100) * random.nextInt(10);
     }
 
     public static void showdown(JsonElement game) {
