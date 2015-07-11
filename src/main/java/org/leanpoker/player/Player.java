@@ -30,7 +30,8 @@ public class Player {
         List<CardDto> cards = new ArrayList<CardDto>();
         cards.addAll(hole_cards);
 
-        if (communityCards.size() >= 3) {
+        boolean flop = communityCards.size() >= 3;
+        if (flop) {
             cards.addAll(communityCards);
         }
 
@@ -43,13 +44,22 @@ public class Player {
         int playersActive = getPlayersActive(gameState);
         int playersInGame = getPlayersInGame(gameState);
 
-        if (rank - playersActive >= 2) {
-            return call + (rank - 4) * minimumRaise;
-        } else if (playersInGame == 2) {
-            return call;
+        if(flop) {
+            if(rank > 6) {
+                return call + (rank - 6) * minimumRaise;
+            } else if(call > 0 && rank > 3){
+                return call;
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            if (rank - playersActive >= 2) {
+                return call + (rank - 4) * minimumRaise;
+            } else {
+                return 0;
+            }
         }
+
 
 	}
 
