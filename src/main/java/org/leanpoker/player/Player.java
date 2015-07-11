@@ -38,17 +38,16 @@ public class Player {
 
         int bet = getOrElse(currentPlayer.getBet(), 0);
 
-        int newBet = currentBuyIn - bet + minimumRaise;
+        int call = currentBuyIn - bet;
 
         int playersActive = getPlayersActive(gameState);
         int playersInGame = getPlayersInGame(gameState);
 
-
         if (rank - playersActive >= 2) {
-            return newBet + (rank - 6) * minimumRaise;
+            return call + (rank - 4) * minimumRaise;
         } else if (playersInGame == 2) {
-            return currentBuyIn - bet;
-        } else{
+            return call;
+        } else {
             return 0;
         }
 
