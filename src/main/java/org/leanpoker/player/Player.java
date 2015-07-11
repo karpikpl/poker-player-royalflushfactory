@@ -45,9 +45,9 @@ public class Player {
         int playersInGame = getPlayersInGame(gameState);
 
         if(flop) {
-            if(rank > 6) {
-                return call + (rank - 6) * minimumRaise;
-            } else if(call > 0 && rank > 3){
+            if(rank >= 3) {
+                return call + (rank - 3) * minimumRaise;
+            } else if(call > 0 && rank >= 2){
                 return call;
             } else {
                 return 0;
@@ -55,6 +55,8 @@ public class Player {
         } else {
             if (rank - playersActive >= 2) {
                 return call + (rank - 4) * minimumRaise;
+            } else if (rank - playersActive >= 0) {
+                return call;
             } else {
                 return 0;
             }
